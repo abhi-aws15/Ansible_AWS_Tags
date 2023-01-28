@@ -1,0 +1,19 @@
+- name: Gather information about ALB named "{{ item }}"
+  amazon.aws.elb_application_lb_info:
+    region: "{{ region }}"
+    names: "{{ item }}"
+  register: elb_info
+  tags: application-lb
+
+# - debug:
+#     var: elb_info
+- name: Tagging Application Load Balancer "{{ item }}"
+  shell: |
+          aws elbv2 add-tags \
+          --region "{{ region }}" \
+          --resource-arns "{{ elb_info.load_balancers[0].load_balancer_arn }}" \
+          --tags \
+          "Key=Name,Value={{ application_elb_tags.Name }}" \
+          "Key=Location,Value={{ tags.Location }}" \
+          "Key=Environment,Value={{ tags.Environment }}" \
+  tags: application-lb

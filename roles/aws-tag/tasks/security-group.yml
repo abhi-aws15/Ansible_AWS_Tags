@@ -1,0 +1,10 @@
+- name: Ensure tags are present on security groups
+  amazon.aws.ec2_tag:
+    region: "{{ region }}"
+    resource: "{{ item }}"
+    purge_tags: false
+    tags:
+      Name: "{{ sg_tags.Name }}"
+      Location: "{{ tags.Location }}"
+      Environment: "{{ tags.Environment }}"
+  tags: security-group

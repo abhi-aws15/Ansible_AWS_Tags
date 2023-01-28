@@ -1,0 +1,64 @@
+---
+# tasks file for aws-ec2-tag
+- name: Ensure tags are present on a EC2
+  include_tasks: ec2-instance.yml
+  with_items: "{{ instance_id }}"
+  tags: ec2
+
+# tasks file for aws-vpc-tag
+- name: Ensure tags are present on a VPC & Subnets
+  include_tasks: vpc.yml
+  with_items: "{{ vpc_id }}"
+  tags: vpc
+
+# tasks file for aws-public-subnet-tag
+- name: Ensure tags are present on a Public Subnets
+  include_tasks: public-subnet.yml
+  with_items: "{{ public_subnet_id }}"
+  tags: public-subnet
+
+# tasks file for aws-private-subnet-tag
+- name: Ensure tags are present on a Private Subnets
+  include_tasks: private-subnet.yml
+  with_items: "{{ private_subnet_id }}"
+  tags: private-subnet
+
+# tasks file for aws-loadbalancer-tag
+- name: Ensure tags are present on a Application Load Balancer
+  include_tasks: application-loadbalancer.yml
+  with_items: "{{ application_elb_name }}"
+  tags: application-lb
+
+- name: Ensure tags are present on a Classic Load Balancer
+  include_tasks: classic-loadbalancer.yml
+  with_items: "{{ classic_elb_name }}"
+  tags: classic-lb
+
+- name: Ensure tags are present on a Network Load Balancer
+  include_tasks: network-loadbalancer.yml
+  with_items: "{{ network_elb_name }}"
+  tags: network-lb
+
+# tasks file for aws-tg-tag
+- name: Ensure tags are present on a Target Group
+  include_tasks: target-group.yml
+  with_items: "{{ tg_name }}"
+  tags: targetgroup
+
+# tasks file for aws-eip-tag
+- name: Ensure tags are present on a EIP Resource
+  include_tasks: elastic-ip.yml
+  with_items: "{{ public_ip }}"
+  tags: elastic_ip
+
+# tasks file for security group
+- name: Ensure tags are present on security groups
+  include_tasks: security-group.yml
+  with_items: "{{ group_id }}"
+  tags: security-group
+  
+# tasks file for aws-RDS
+- name: Ensure tags are present on RDS instances
+  include_tasks: relational-database.yml
+  with_items: "{{ db_instance_identifier }}"
+  tags: aws-rds

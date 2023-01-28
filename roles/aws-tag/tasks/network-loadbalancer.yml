@@ -1,0 +1,16 @@
+- name: Gather information about NLB named "{{ item }}"
+  shell: |
+          aws elbv2 describe-load-balancers --region {{ region }} --query "LoadBalancers[?LoadBalancerName=='{{ item }}'].[LoadBalancerArn]" --output text
+  register: elb_info
+  tags: network-lb
+
+- name: Tagging Network Load Balancer "{{ item }}"
+  shell: |
+          aws elbv2 add-tags \
+          --region {{ region }} \
+          --resource-arns {{ elb_info.stdout }} \
+          --tags \
+          "Key=Name,Value={{ network_elb_tags.Name }}" \
+          "Key=Location,Value={{ tags.Location }}" \
+          "Key=Environment,Value={{ tags.Environment }}" \
+  tags: network-lb

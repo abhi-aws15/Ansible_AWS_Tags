@@ -1,0 +1,10 @@
+- name: Tagging the elastic IP , public address "{{ item }}"
+  amazon.aws.ec2_eip:
+    region: us-west-2
+    public_ip: "{{ item }}"
+    purge_tags: false
+    tags:
+      Name: "{{ eip_tags.Name }}"
+      Location: "{{ tags.Location }}"
+      Environment: "{{ tags.Environment }}"
+  tags: elastic_ip

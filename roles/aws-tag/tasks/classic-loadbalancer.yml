@@ -1,0 +1,9 @@
+- name: Tagging Classic LoadBalancers "{{ item }}"
+  shell: |
+          aws elb add-tags --load-balancer-name "{{ item }}" \
+          --region "{{ region }}" \
+          --tags \
+          "Key=Name,Value={{ classic_elb_tags.Name }}" \
+          "Key=Location,Value={{ tags.Location }}" \
+          "Key=Environment,Value={{ tags.Environment }}" \
+  tags: classic-lb

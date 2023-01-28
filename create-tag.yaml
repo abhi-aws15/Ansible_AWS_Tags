@@ -1,0 +1,6 @@
+- name: Tagging AWS resources
+  hosts: localhost
+  #become: yes
+ 
+  roles:
+    - role: aws-tag

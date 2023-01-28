@@ -1,0 +1,11 @@
+
+- name: Ensure tags are "{{ state }}" on a VPC resource
+  amazon.aws.ec2_tag:
+    region: "{{ region }}"
+    resource: "{{ item }}"
+    state: "{{ state }}"
+    tags:
+      Name: "{{ vpc_tags.Name }}"                                     #key: value
+      Location: "{{ tags.Location }}"
+      Environment: "{{ tags.Environment }}"
+  tags: vpc

@@ -1,0 +1,17 @@
+- name: Gather information about a target group "{{ item }}"
+  community.aws.elb_target_group_info:
+    names:
+      - "{{ item }}"
+  register: target_group_info
+  tags: targetgroup
+
+- name: Tagging Target Group "{{ item }}"
+  shell: |
+          aws elbv2 add-tags \
+          --region "{{ region }}" \
+          --resource-arns "{{ target_group_info.target_groups[0].target_group_arn }}" \
+          --tags \
+          "Key=Name,Value={{ tg_tags.Name }}" \
+          "Key=Location,Value={{ tags.Location }}" \
+          "Key=Environment,Value={{ tags.Environment }}"
+  tags: targetgroup

@@ -1,0 +1,11 @@
+- name: Ensure tags are "{{ state }}" on a Private Subnet resource
+  amazon.aws.ec2_tag:
+    region: "{{ region }}"
+    resource: "{{ item }}" 
+    state: "{{ state }}"
+    tags:
+      Name: "{{ private_subnet_tags.Name }}"                                         #key: value
+      Location: "{{ tags.Location }}"
+      Environment: "{{ tags.Environment }}"
+  with_items: "{{ private_subnet_id }}"
+  tags: private-subnet

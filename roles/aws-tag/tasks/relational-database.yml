@@ -1,0 +1,10 @@
+- name: Ensure tags are present on RDS instances
+  community.aws.rds_instance:
+    region: "{{ region }}"
+    db_instance_identifier: "{{ item }}"
+    purge_tags: false
+    tags:
+      Name: "{{ rds_tags.Name }}"
+      Location: "{{ tags.Location }}"
+      Environment: "{{ tags.Environment }}"
+  tags: aws-rds
